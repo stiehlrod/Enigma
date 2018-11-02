@@ -4,15 +4,21 @@ require './test/test_helper'
 
 class EnigmaTest < Minitest::Test
 
+  def setup
+    @enigma = Enigma.new
+  end
   def test_it_exists
-    enigma = Enigma.new
-    assert_instance_of Enigma, enigma
+    assert_instance_of Enigma, @enigma
     #=> #<Enigma:0x00007ff90f24cb78...>
   end
+
+  def test_it_can_convert_a_date_string_to_key
+    actual = @enigma.convert_date("040895")
+    assert_equal 1025, actual
+  end
   # encrypt a message with a key and date
-  def test_it_is
+  def test_it_can_encrypt_a_message_with_key_and_date
     skip
-    enigma.encrypt("hello world", "02715", "040895")
   #=>
   #   {
   #     encryption: "keder ohulw",
