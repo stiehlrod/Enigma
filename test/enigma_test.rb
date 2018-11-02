@@ -16,6 +16,11 @@ class EnigmaTest < Minitest::Test
     actual = @enigma.convert_date("040895")
     assert_equal 1025, actual
   end
+
+  def test_character_map_can_return_an_array
+    actual = @enigma.add_keys_together
+    assert_equal [12,23,34,45], actual
+  end
   # encrypt a message with a key and date
   def test_it_can_encrypt_a_message_with_key_and_date
     skip
