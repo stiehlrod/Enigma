@@ -30,23 +30,6 @@ class Enigma
     character_map.push(" ")
   end
 
-  def get_random_key
-    random = rand(11111...99999).to_s
-    random.split(//)
-  end
-
-  def get_keys_array(random_array)
-    new_array = []
-    random_array.each_cons(2) do |con|
-      new_array << con
-    end
-    keys = new_array.map do |first, second|
-      first+second
-    end
-    keys.map do |num|
-        num.to_i
-    end
-  end
 
   def make_date_array(date_string)
     date = date_string.to_i
@@ -59,13 +42,13 @@ class Enigma
     end
   end
 
-  def make_key_array(key)
-    key_ints = key.chars.map.with_index do |char, i|
-      key[i..i+1].to_i
+    def make_key_array(key)
+      key_ints = key.chars.map.with_index do |char, i|
+        key[i..i+1].to_i
+      end
+      key_ints.pop
+      key_ints
     end
-    key_ints.pop
-    key_ints
-  end
 
   def make_shift_hash(date_string, key)
     date_ints = make_date_array(date_string)
