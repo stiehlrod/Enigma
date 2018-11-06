@@ -103,14 +103,15 @@ class Enigma
   def translate(char, shift_amt)#h,0
     #find the letter int he aplha and rotate on the shift
     new_ind = character_map.index(char) + shift_amt
-    character_map[new_ind]
-      # binding.pry
+    character_map[new_ind % 27]
+    # binding.pry
+
   end
 
   def prepare_for_encryption(message, key, date_string)
     shift = make_shift_hash(date_string, key)
-    # binding.pry
     message.chars.map.with_index do |char, i|
+      # binding.pry
       translate(char, shift[i % 4])
     end.join
 
