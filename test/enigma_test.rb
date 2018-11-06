@@ -66,11 +66,11 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_it_can_translate
-    actual = @enigma.translate("hello world",3)
-    expected = 'keder ohulw'
-    assert_equal expected, actual
-  end
+  # def test_it_can_translate
+  #   actual = @enigma.translate("hello world",3)
+  #   expected = 'keder ohulw'
+  #   assert_equal expected, actual
+  # end
 
   def test_it_can_make_key_array
     skip
@@ -91,14 +91,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_prepare_for_encrpyt
-    expected = 'keder'
-    actual = @enigma.prepare_for_encryption("hello", "02715", "040895")
+    expected = 'keder ohulw'
+    actual = @enigma.prepare_for_encryption("hello world", "02715", "040895")
     assert_equal expected, actual
   end
 
   # encrypt a message with a key and date
   def test_it_can_encrypt_a_message_with_key_and_date
-    skip
     actual = @enigma.encrypt("hello world", "02715", "040895")
     expected = {
       encryption: "keder ohulw",
