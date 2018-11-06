@@ -2,13 +2,15 @@ require 'pry'
 
 class Enigma
 
-  attr_reader :function
+  attr_reader :function, :today
 
-  def initialize(message, key, date_string, function = "encrypt")
-    @function = function
-    @message = message
-    @key = key
-    @date_string = date_string
+  def initialize
+    # @today = Date.today.strftime("%m%d%y")
+    #gsub(pattern, replacement)
+  end
+
+  def today
+    Date.today.strftime("%m%d%y")
   end
 
   def convert_date(date_string)
@@ -61,6 +63,7 @@ class Enigma
   end
 
   def translate(char, shift_amt)
+    # binding.pry
     if @function == "encrypt"
       new_ind = character_map.index(char) + shift_amt
     elsif @function == "decrypt"
@@ -70,16 +73,34 @@ class Enigma
   end
 
   def prepare_for_encryption(message, key, date_string, function)
+    @function = function
     shift = make_shift_hash(date_string, key)
     message.chars.map.with_index do |char, i|
       translate(char, shift[i % 4])
     end.join
   end
 
-  def encrypt(message, key, date_string, function)
-    message = prepare_for_encryption(message, key, date_string, function)
+  def encrypt(message, key, date_string = today)
+    message = prepare_for_encryption(message, key, date_string, "encrypt")
     return_hash = {}
     return_hash[:encryption] = message
+    return_hash[:key] = key
+    return_hash[:date] = date_string
+    return_hash
+  end
+
+  def prepare_for_decryption(message, key, date_string, function)
+    @function = function
+    shift = make_shift_hash(date_string, key)
+    message.chars.map.with_index do |char, i|
+      translate(char, shift[i % 4])
+    end.join
+  end
+
+  def decrypt(message, key, date_string)
+    message = prepare_for_decryption(message, key, date_string, "decrypt")
+    return_hash = {}
+    return_hash[:decryption] = message
     return_hash[:key] = key
     return_hash[:date] = date_string
     return_hash
