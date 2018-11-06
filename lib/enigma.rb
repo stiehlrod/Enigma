@@ -2,8 +2,13 @@ require 'pry'
 
 class Enigma
 
-  def initialize
+  attr_reader :function
 
+  def initialize(message, key, date_string, function = "encrypt")
+    @function = function
+    @message = message
+    @key = key
+    @date_string = date_string
   end
 
   def convert_date(date_string)
@@ -73,19 +78,23 @@ class Enigma
   end
 
   def translate(char, shift_amt)
-    new_ind = character_map.index(char) + shift_amt
+    if @function == "encrypt"
+      new_ind = character_map.index(char) + shift_amt
+    elsif @function == "decrypt"
+      new_ind = character_map.index(char) - shift_amt
+    end
     character_map[new_ind % 27]
   end
 
-  def prepare_for_encryption(message, key, date_string)
+  def prepare_for_encryption(message, key, date_string, function)
     shift = make_shift_hash(date_string, key)
     message.chars.map.with_index do |char, i|
       translate(char, shift[i % 4])
     end.join
   end
 
-  def encrypt(message, key, date_string)
-    message = prepare_for_encryption(message, key, date_string)
+  def encrypt(message, key, date_string, function)
+    message = prepare_for_encryption(message, key, date_string, function)
     return_hash = {}
     return_hash[:encryption] = message
     return_hash[:key] = key
