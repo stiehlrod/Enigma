@@ -65,10 +65,10 @@ include Key
     shift
   end
 
-  def encrypt_translate(char, shift_amt)
-    new_ind = character_map.index(char) + shift_amt
-    character_map[new_ind % 27]
-  end
+  # def encrypt_translate(char, shift_amt)
+  #   new_ind = character_map.index(char) + shift_amt
+  #   character_map[new_ind % 27]
+  # end
 
   def decrypt_translate(char, shift_amt)
     new_ind = character_map.index(char) - shift_amt
