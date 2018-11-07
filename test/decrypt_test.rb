@@ -39,4 +39,16 @@ class DecryptTest < Minitest::Test
     end
   end
 
+  def test_it_can_decrypt_use_random_key_and_todays_date
+      decrypt = Decrypt.new
+      decrypt.stubs(:get_random_key).returns"02715"
+      decrypt.stubs(:today).returns"040895"
+      actual = decrypt.decrypt("keder ohulw")
+      expected = {
+          decryption: "hello world",
+          key: "02715",
+          date: "040895"
+        }
+      assert_equal expected, actual
+  end
 end
