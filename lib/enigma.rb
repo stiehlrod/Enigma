@@ -37,18 +37,14 @@ include Key
     date_digits = squared.to_s[-4..-1]
     date_digits.split(//).to_a
     keys = convert_date(date_string)
-    keys.map do |key|
-      key.to_i
-    end
+    keys.map { |key| key.to_i }
   end
 
   def make_shift_hash(date_string, key = get_random_key)
     date_ints = make_date_array(date_string)
     key_ints = make_key_array(key)
     shift = {}
-    date_ints.each_with_index do |int, index|
-      shift[index] = int + key_ints[index]
-    end
+    date_ints.each_with_index { |int, index| shift[index] = int + key_ints[index] }
     shift
   end
 
