@@ -18,7 +18,7 @@ Test Driven Development<br>
 -Test coverage metrics show 100% coverage for Enigma, Decrypt, Encrypt classes. <br>
 -While I don't think my commit history demonstrates it, I did improve my TDD practices in this project!
 
-Version Control 3: Meets Expectations <br>
+Version Control 3.5 <br>
 45 commits <br>
 16 pull requests <br>
 No more than 3 commits include multiple pieces of functionality.
