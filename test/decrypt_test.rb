@@ -27,7 +27,6 @@ class DecryptTest < Minitest::Test
     assert_equal expected, actual
   end
 
-
   def test_it_can_decrypt_with_todays_date
     decrypt = Decrypt.new
     decrypt.stub :today, "040895" do
