@@ -17,7 +17,8 @@ class EncryptTest < Minitest::Test
   end
 
   def test_it_can_encrypt_a_message_with_key_and_date
-    actual = @enigma.encrypt("hello world", "02715", "040895")
+    encrypt = Encrypt.new
+    actual = encrypt.encrypt("hello world", "02715", "040895")
     expected = {
                 encryption: "keder ohulw",
                 key: "02715",

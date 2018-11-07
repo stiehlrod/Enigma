@@ -16,4 +16,14 @@ class Decrypt < Enigma
       decrypt_translate(char, shift[i % 4])
     end.join
   end
+
+  def decrypt(message, key, date_string = today)
+    # key = @key.get_random_key if key == nil
+    message = prepare_for_decryption(message, key, date_string)
+    return_hash = {}
+    return_hash[:decryption] = message
+    return_hash[:key] = key
+    return_hash[:date] = date_string
+    return_hash
+  end
 end

@@ -17,7 +17,8 @@ class DecryptTest < Minitest::Test
   end
 
   def test_it_can_decrypt_a_string
-    actual = @enigma.decrypt("keder ohulw", "02715", "040895")
+    decrypt = Decrypt.new
+    actual = decrypt.decrypt("keder ohulw", "02715", "040895")
     expected = {
         decryption: "hello world",
         key: "02715",
