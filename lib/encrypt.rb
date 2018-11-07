@@ -16,4 +16,14 @@ class Encrypt < Enigma
       encrypt_translate(char, shift[i % 4])
     end.join
   end
+
+  def encrypt(message, key = get_random_key, date_string = today)
+    message = prepare_for_encryption(message, key, date_string)
+    return_hash = {}
+    return_hash[:encryption] = message
+    return_hash[:key] = key
+    return_hash[:date] = date_string
+    return_hash
+  end
+
 end

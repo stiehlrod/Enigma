@@ -26,4 +26,19 @@ class DecryptTest < Minitest::Test
       }
     assert_equal expected, actual
   end
+
+
+  def test_it_can_decrypt_with_todays_date
+    decrypt = Decrypt.new
+    decrypt.stub :today, "040895" do
+      actual = decrypt.decrypt("keder ohulw", "02715")
+      expected = {
+          decryption: "hello world",
+          key: "02715",
+          date: "040895"
+        }
+      assert_equal expected, actual
+    end
+  end
+
 end
