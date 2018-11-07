@@ -6,7 +6,7 @@ module Key
   end
 
   def get_random_key
-    random_key = rand(11111...99999).to_s
+    rand(11111...99999).to_s
     # random.split(//)
   end
 

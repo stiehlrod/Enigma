@@ -1,20 +1,29 @@
-require 'pry'
 require './lib/enigma'
 
+class Decrypt < Enigma
 
-message_txt, encrypted_txt = ARGV
-handle = File.open(encrypted_txt, 'r')
-incoming = handle.read
-incoming.chomp!
-handle.close
+  def initialize
+  end
 
-enigma = Enigma.new
-decrypted = enigma.decrypt(incoming,"82648","240818")
+  def decrypt_translate(char, shift_amt)
+    new_ind = character_map.index(char) - shift_amt
+    character_map[new_ind % 27]
+  end
 
-writer = File.open(message_txt, 'w')
-writer.write(decrypted[:decryption])
-p "Created 'decrypted_txt' with the key #{decrypted[:key]} and the date #{decrypted[:date]}."
+  def prepare_for_decryption(message, key, date_string = today)
+    shift = make_shift_hash(date_string, key)
+    message.chars.map.with_index do |char, i|
+      decrypt_translate(char, shift[i % 4])
+    end.join
+  end
 
-writer.close
-
-# ruby lib/decrypt.rb encrypted.txt message.txt
+  def decrypt(message, key, date_string = today)
+    # key = @key.get_random_key if key == nil
+    message = prepare_for_decryption(message, key, date_string)
+    return_hash = {}
+    return_hash[:decryption] = message
+    return_hash[:key] = key
+    return_hash[:date] = date_string
+    return_hash
+  end
+end

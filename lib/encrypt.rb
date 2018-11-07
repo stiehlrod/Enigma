@@ -1,18 +1,19 @@
-require 'pry'
 require './lib/enigma'
 
-message_txt, encrypted_txt = ARGV
-handle = File.open(message_txt, 'r')
-incoming = handle.read
-incoming.chomp!
-handle.close
+class Encrypt < Enigma
 
-enigma = Enigma.new
-encrypted = enigma.encrypt(incoming,"82648","240818")
+  def initialize
+  end
 
-writer = File.open(encrypted_txt, 'w')
-writer.write(encrypted[:encryption])
-p "Created 'encrypted_txt' with the key #{encrypted[:key]} and the date #{encrypted[:date]}."
-writer.close
+  def encrypt_translate(char, shift_amt)
+    new_ind = character_map.index(char) + shift_amt
+    character_map[new_ind % 27]
+  end
 
-# ruby lib/encrypt.rb message.txt encrypted.txt
+  def prepare_for_encryption(message, key = get_random_key, date_string = today)
+    shift = make_shift_hash(date_string, key)
+    message.chars.map.with_index do |char, i|
+      encrypt_translate(char, shift[i % 4])
+    end.join
+  end
+end
