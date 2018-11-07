@@ -26,4 +26,34 @@ class EncryptTest < Minitest::Test
               }
     assert_equal expected, actual
   end
+
+  def test_it_can_encrypt_with_todays_date
+    encrypt = Encrypt.new
+    encrypt.stub :today, "040895" do
+      actual = encrypt.encrypt("hello world", "02715")
+      expected = {
+          encryption: "keder ohulw",
+          key: "02715",
+          date: "040895"
+        }
+
+      assert_equal expected, actual
+    end
+  end
+
+
+  def test_it_can_encrypt_use_random_key_and_todays_date
+    skip
+    encrypt = Encrypt.new
+    encrypt.stub :today, "040895" do
+      actual = encrypt.encrypt("hello world")
+      expected = {
+          decryption: "keder ohulw",
+          key: "02715",
+          date: "040895"
+        }
+      assert_equal expected, actual
+    end
+  end
+
 end
