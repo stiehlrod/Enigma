@@ -6,7 +6,6 @@ include Key
   attr_reader :today
 
   def initialize
-
   end
 
   def today
