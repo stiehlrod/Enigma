@@ -1,5 +1,6 @@
 require 'pry'
 require './lib/enigma'
+require './lib/encrypt'
 
 message_txt, encrypted_txt = ARGV
 handle = File.open(message_txt, 'r')
@@ -7,8 +8,8 @@ incoming = handle.read
 incoming.chomp!
 handle.close
 
-enigma = Enigma.new
-encrypted = enigma.encrypt(incoming,"82648","240818")
+encrypt = Encrypt.new
+encrypted = encrypt.encrypt(incoming,"82648","240818")
 
 writer = File.open(encrypted_txt, 'w')
 writer.write(encrypted[:encryption])
