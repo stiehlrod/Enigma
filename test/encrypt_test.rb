@@ -1,11 +1,11 @@
 require 'date'
-require './lib/enigma'
+require './lib/encrypt'
 require './test/test_helper'
 
 class EncryptTest < Minitest::Test
 
   def test_it_exists
-    encrypt  =Encrpyt.new
-    assert_instance_of Encrpyt, encrypt
+    encrypt  =Encrypt.new
+    assert_instance_of Encrypt, encrypt
   end
 end
