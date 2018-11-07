@@ -1,4 +1,3 @@
-require 'date'
 require './lib/decrypt'
 require './test/test_helper'
 
