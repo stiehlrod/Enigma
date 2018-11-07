@@ -1,18 +1,18 @@
 require 'pry'
 require './lib/enigma'
-require './lib/key'
-# binding.pry
 
-handle = File.open(ARGV[0], 'r')
+message_txt, encrypted_txt = ARGV
+handle = File.open(message_txt, 'r')
 incoming = handle.read
+incoming.chomp!
 handle.close
-# key = @key.get_random_key
+
 enigma = Enigma.new
-encrypted = enigma.encrypt(incoming,key,date_string)
+encrypted = enigma.encrypt(incoming,"82648","240818")
 
-writer = File.open(ARGV[1], 'w')
-writer.write(encrypted)
-
+writer = File.open(encrypted_txt, 'w')
+writer.write(encrypted[:encryption])
+p "Created 'encrypted_txt' with the key #{encrypted[:key]} and the date #{encrypted[:date]}."
 writer.close
 
 # ruby lib/encrypt.rb message.txt encrypted.txt

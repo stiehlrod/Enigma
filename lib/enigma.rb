@@ -7,19 +7,15 @@ include Key
 
   def initialize
 
-    # @today = Date.today.strftime("%m%d%y")
-    #gsub(pattern, replacement)
   end
 
   def today
     Date.today.strftime("%m%d%y")
   end
 
-  def get_key
-    if key == nil
-      @key.get_random_key
-    end
-  end
+  # def get_key
+  #   random_key.get_random_key
+  # end
 
   def convert_date(date_string)
     date = date_string.to_i
@@ -40,7 +36,6 @@ include Key
     character_map.push(" ")
   end
 
-
   def make_date_array(date_string)
     date = date_string.to_i
     squared = date * date
@@ -52,7 +47,7 @@ include Key
     end
   end
 
-    def make_key_array(key = self.get_key)
+    def make_key_array(key = get_random_key)
       key_ints = key.chars.map.with_index do |char, i|
         key[i..i+1].to_i
       end
@@ -60,7 +55,7 @@ include Key
       key_ints
     end
 
-  def make_shift_hash(date_string, key = self.get_key)
+  def make_shift_hash(date_string, key = get_random_key)
     date_ints = make_date_array(date_string)
     key_ints = make_key_array(key)
     shift = {}
@@ -80,14 +75,14 @@ include Key
     character_map[new_ind % 27]
   end
 
-  def prepare_for_encryption(message, key = self.get_key, date_string = today)
+  def prepare_for_encryption(message, key = get_random_key, date_string = today)
     shift = make_shift_hash(date_string, key)
     message.chars.map.with_index do |char, i|
       encrypt_translate(char, shift[i % 4])
     end.join
   end
 
-  def encrypt(message, key = self.get_key, date_string = today)
+  def encrypt(message, key = get_random_key, date_string = today)
     message = prepare_for_encryption(message, key, date_string)
     return_hash = {}
     return_hash[:encryption] = message
@@ -96,14 +91,15 @@ include Key
     return_hash
   end
 
-  def prepare_for_decryption(message, key = self.get_key, date_string = today)
+  def prepare_for_decryption(message, key, date_string = today)
     shift = make_shift_hash(date_string, key)
     message.chars.map.with_index do |char, i|
       decrypt_translate(char, shift[i % 4])
     end.join
   end
 
-  def decrypt(message, key = self.get_key, date_string = today)
+  def decrypt(message, key, date_string = today)
+    # key = @key.get_random_key if key == nil
     message = prepare_for_decryption(message, key, date_string)
     return_hash = {}
     return_hash[:decryption] = message

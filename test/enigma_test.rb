@@ -89,12 +89,13 @@ class EnigmaTest < Minitest::Test
     end
   end
 
-  def test_it_can_decrypt_use_random_key_and_todays_date
+  def test_it_can_encrypt_use_random_key_and_todays_date
+    skip
     enigma = Enigma.new
     enigma.stub :today, "040895" do
-      actual = enigma.decrypt("keder ohulw")
+      actual = enigma.encrypt("hello world")
       expected = {
-          decryption: "hello world",
+          decryption: "keder ohulw",
           key: "02715",
           date: "040895"
         }
