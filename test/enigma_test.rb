@@ -1,4 +1,3 @@
-require 'date'
 require './lib/enigma'
 require './test/test_helper'
 

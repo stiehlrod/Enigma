@@ -1,4 +1,3 @@
-require 'date'
 require './lib/encrypt'
 require './test/test_helper'
 
