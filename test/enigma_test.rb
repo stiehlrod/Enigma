@@ -5,22 +5,19 @@ require './test/test_helper'
 class EnigmaTest < Minitest::Test
 
   def setup
-    @enigma = Enigma.new("hello world", "02715", "040895")
+    @enigma = Enigma.new
   end
 
   def test_it_exists
-    skip
     assert_instance_of Enigma, @enigma
   end
 
   def test_it_can_convert_a_date_string_to_key
-    skip
     actual = @enigma.convert_date("040895")
     assert_equal ["1", "0", "2", "5"], actual
   end
 
   def test_it_can_make_date_array
-    skip
     expected = [1,0,2,5]
     actual = @enigma.make_date_array("040895")
     assert_equal expected, actual
@@ -39,22 +36,23 @@ class EnigmaTest < Minitest::Test
 
   def test_it_can_prepare_for_encrpyt
     expected = 'keder ohulw'
-    actual = @enigma.prepare_for_encryption("hello world", "02715", "040895", "encrypt")
+    actual = @enigma.prepare_for_encryption("hello world", "02715", "040895")
     assert_equal expected, actual
   end
 
   def test_it_can_encrypt_a_message_with_key_and_date
-    actual = @enigma.encrypt("hello world", "02715", "040895", "encrypt")
+    actual = @enigma.encrypt("hello world", "02715", "040895")
     expected = {
-      encryption: "keder ohulw",
-      key: "02715",
-      date: "040895"
-    }
+                encryption: "keder ohulw",
+                key: "02715",
+                date: "040895"
+              }
     assert_equal expected, actual
   end
 
   def test_it_can_decrypt_a_string
-    actual = @enigma.encrypt("keder ohulw", "02715", "040895", "decrypt")
+    actual = @enigma.decrypt("keder ohulw", "02715", "040895")
+
     expected = {
         decryption: "hello world",
         key: "02715",
@@ -63,26 +61,47 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  # encrypt a message with a key (uses today's date)
+  def test_it_can_encrypt_with_todays_date
+    enigma = Enigma.new
+    enigma.stub :today, "040895" do
+      actual = enigma.encrypt("hello world", "02715")
+      expected = {
+          encryption: "keder ohulw",
+          key: "02715",
+          date: "040895"
+        }
+
+      assert_equal expected, actual
+    end
+  end
+
   def test_it_can_decrypt_with_todays_date
-    skip
-    encrypted = enigma.encrypt("hello world", "02715")
-    #=> # encryption hash here
+    enigma = Enigma.new
+    enigma.stub :today, "040895" do
+      actual = enigma.decrypt("keder ohulw", "02715")
+      expected = {
+          decryption: "hello world",
+          key: "02715",
+          date: "040895"
+        }
 
-    #decrypt a message with a key (uses today's date)
+      assert_equal expected, actual
+    end
   end
 
-  def test_it_can_generate_random_key_and_use_todays_date
+  def test_it_can_encrypt_use_random_key_and_todays_date
     skip
-    enigma.decrypt(encrypted, "02715")
-  #=> # decryption hash here
+    enigma = Enigma.new
+    enigma.stub :today, "040895" do
+      actual = enigma.encrypt("hello world")
+      expected = {
+          decryption: "keder ohulw",
+          key: "02715",
+          date: "040895"
+        }
 
-  # encrypt a message (generates random key and uses today's date)
+      assert_equal expected, actual
+    end
   end
 
-  def test_it_is
-    skip
-    enigma.encrypt("hello world")
-  #=> # encryption hash here
-  end
 end
