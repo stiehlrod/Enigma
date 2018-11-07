@@ -1,8 +1,18 @@
-# Enigma#decrypt(ciphertext, key, date)
-# The decrypt method takes a ciphertext String and the Key used for encryption as arguments. The decrypt method can optionally take a date as the third argument. If no date is given, this method should use today’s date for decryption.
-#
-# The decrypt method returns a hash with three keys:
-#
-# :decryption => the decrypted String
-# :key => the key used for decryption as a String
-# :date => the date used for decryption as a String in the form DDMMYY
+require 'pry'
+require './lib/enigma'
+require './lib/key'
+# binding.pry
+
+handle = File.open(ARGV[1], 'r')
+incoming = handle.read
+handle.close
+# key = @key.get_random_key
+enigma = Enigma.new
+decrypted = enigma.decrypt(incoming,key,date_string)
+
+writer = File.open(ARGV[0], 'w')
+writer.write(decrypted)
+
+writer.close
+
+# ruby lib/decrypt.rb message.txt encrypted.txt
