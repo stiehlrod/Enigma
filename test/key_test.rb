@@ -4,6 +4,14 @@ require './lib/enigma'
 
 class KeyTest < Minitest::Test
 
+  def setup
+    @enigma = Enigma.new
+  end
+
+  def test_it_exists
+    assert_instance_of Enigma, @enigma
+  end
+
   def test_it_can_generate_random_key
     enigma = mock #Enigma.new
     enigma.stubs(:get_random_key).returns"40895"
